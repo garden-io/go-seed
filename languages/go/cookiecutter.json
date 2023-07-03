@@ -1,0 +1,10 @@
+{
+    "full_name": "Your Name",
+    "email": "your@email.com",
+    "github_username": "your_github_username",
+    "app_name": "my-golang-api",
+    "project_description": "A GoLang project with Garden configuration created using Cookiecutter",
+    "_copy_without_render": [
+        "my-chart/templates/app.yaml"
+    ]
+}

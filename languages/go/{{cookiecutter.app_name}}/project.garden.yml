@@ -1,0 +1,45 @@
+apiVersion: garden.io/v1
+kind: Project
+name: go-recipe
+defaultEnvironment: local
+dotIgnoreFile: .gitignore
+
+variables:
+  # Replace underscores as Kubernetes namespaces do not allow them.
+  user-namespace: go-recipe-${kebabCase(local.username)} # make sure to explain all of this.
+
+environments:
+
+  - name: local
+    defaultNamespace: ${var.user-namespace}
+    variables:
+      base-hostname: local.demo.garden
+      targetStage: development
+
+  - name: production
+    defaultNamespace: ${var.user-namespace}
+    variables:
+      base-hostname: "garden.shankyjs.com"
+      targetStage: production
+
+providers:
+  - name: local-kubernetes
+    environments: [local]
+    namespace: ${environment.namespace}
+    defaultHostname: ${var.base-hostname}
+    context: docker-desktop
+
+  # Deploy to remote production environment using the same configuration as local.
+  - name: kubernetes
+    environments: [production]
+    context: admin@main-ce
+    setupIngressController: nginx
+    buildMode: local-docker
+    imagePullSecrets:
+      - name: regcred
+        namespace: default
+    deploymentRegistry:
+      hostname: docker.io
+      namespace: shankyweb
+    namespace: ${environment.namespace}
+    defaultHostname: ${var.base-hostname}

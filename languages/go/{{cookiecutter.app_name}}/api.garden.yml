@@ -1,0 +1,50 @@
+kind: Build
+type: container
+description: Build the Golang API
+name: api-build
+spec:
+  targetStage: production
+
+---
+kind: Deploy
+description: Helm deploy for the worker container
+type: helm
+name: api
+dependencies: [build.api-build]
+spec:
+  # Sync configuration
+  defaultTarget:
+    kind: Deployment
+    name: api
+  sync:
+    paths:
+      - containerPath: /app
+        sourcePath: .
+        mode: one-way-replica
+  # Configuring chart.
+  chart:
+    path: ./my-chart # Garden only support charts to be a sub-path, if you desire you can host this in Github and use repositoryUrl instead.
+  values: # Override default values with Go container config, see all config available at https://github.com/companyinfo/helm-charts/tree/main
+    image:
+      repository: ${actions.build.api-build.outputs.deployment-image-name}
+      tag: ${actions.build.api-build.version}
+      pullPolicy: IfNotPresent
+    ingress:
+      enabled: true
+      path: /
+      hostname: api.${variables.base-hostname}
+    ports:
+      - name: http
+        containerPort: 80
+        protocol: TCP
+    nameOverride: api
+    fullnameOverride: api
+
+---
+kind: Test
+type: container
+name: unit
+description: Unit test for backend API
+build: api-build
+spec:
+  args: ["echo", "ok"]
