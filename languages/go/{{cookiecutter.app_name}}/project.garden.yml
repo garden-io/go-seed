@@ -1,12 +1,12 @@
 apiVersion: garden.io/v1
 kind: Project
-name: go-recipe
+name: go-seed
 defaultEnvironment: local
 dotIgnoreFile: .gitignore
 
 variables:
   # Replace underscores as Kubernetes namespaces do not allow them.
-  user-namespace: go-recipe-${kebabCase(local.username)} # make sure to explain all of this.
+  user-namespace: go-seed-${kebabCase(local.username)} # make sure to explain all of this.
 
 environments:
 
