@@ -10,7 +10,7 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello from your HTTP Server 👋🏻.")
+		fmt.Fprintf(w, "Hello {{cookiecutter.full_name}} 👋🏻.")
 	})
 
 	fmt.Println("Server listening at port 80")

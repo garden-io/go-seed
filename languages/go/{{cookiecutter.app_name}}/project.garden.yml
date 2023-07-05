@@ -19,7 +19,7 @@ environments:
   - name: production
     defaultNamespace: ${var.user-namespace}
     variables:
-      base-hostname: "garden.shankyjs.com"
+      base-hostname: {{cookiecutter.domain_name}}
       targetStage: production
 
 providers:
