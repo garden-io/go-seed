@@ -3,7 +3,7 @@ type: container
 description: Build the Golang API
 name: api-build
 spec:
-  targetStage: production
+  targetStage: ${variables.targetStage}
 
 ---
 kind: Deploy
@@ -47,4 +47,4 @@ name: unit
 description: Unit test for backend API
 build: api-build
 spec:
-  args: ["echo", "ok"]
+  args: ["go", "test"]
