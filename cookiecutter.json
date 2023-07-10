@@ -6,6 +6,7 @@
     "domain_name": "my-golang-api.com",
     "project_description": "A GoLang project with Garden configuration created using Cookiecutter",
     "_copy_without_render": [
-        "my-chart/templates/app.yaml"
+        "my-chart/templates/app.yaml",
+        "README.md"
     ]
 }
