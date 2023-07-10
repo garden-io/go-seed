@@ -1,10 +1,28 @@
 # Go Seed
+_If you love Garden, please ★ star this repository to show your support :green_heart:. Looking for support? Join our [Discord](https://go.garden.io/discord)._
+
+<p align="center">
+  <img src="https://github.com/garden-io/garden/assets/59834693/f62a04cb-44bc-4dd4-8426-398b6cd846fd" align="center">
+</p>
+<div align="center">
+  <a href="https://docs.garden.io/basics/5-min-quickstart/?utm_source=github">Quickstart</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://garden.io/?utm_source=github">Website</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://docs.garden.io/?utm_source=github">Docs</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://github.com/garden-io/garden/tree/0.13.0/examples">Examples</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://garden.io/blog/?utm_source=github">Blog</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://go.garden.io/discord">Discord</a>
+</div>
 
 This seed deploys a simple Go API using Helm and Garden to template our application and seamlessly deploy it to a local Kubernetes cluster ✅.
 
 ## TLDR
 
-```English
+```bash
 curl -sL https://get.garden.io/install.sh | bash
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath # Reload your terminal after this step.
@@ -39,7 +57,7 @@ Here's our file tree 🌲 which it's pretty simple as it only contains some Go c
 
 This Go API example only uses `mux` to create our router and then basic packages like `fmt` and `net/http`.
 
-We also included Unit Testing for the single endpoint created by this API `/`.
+We also included Unit Testing for the single endpoint this API `/` created.
 
 [Reference file](./{{cookiecutter.app_name}}/main.go)
 
@@ -119,7 +137,7 @@ This allows us to use an 800MiB image in Dev, but only 11.8MB in Production.
 
 ## Helm Chart 📈
 
-Our Helm Chart is straightforward as it only consists of a couple of files.
+Our Helm Chart is straightforward as it only consists of a few files.
 
 A chart definition `Chart.yaml` and a template file `app.yaml`.
 
@@ -141,11 +159,11 @@ dependencies:
   - name: helmet
     version: 0.7.0
     repository: https://companyinfo.github.io/helm-charts
-    import-values: # <== It is mandatory if you want to import the Helmet default values.
+    import-values: # <== It is mandatory to import the Helmet default values.
       - defaults
 ````
 
-Your file `templates/app.yaml` contains the necessary syntax to be able to use Helmet as a Library.
+Your file `templates/app.yaml` contains the necessary syntax to use Helmet as a Library.
 ````yaml
 {{ include "helmet.app" . }}
 ````
@@ -265,7 +283,7 @@ spec:
 
 In the following action, you can include your tests, such as unit tests, end-to-end (E2E) tests, or any other type of test you prefer to execute 🧪.
 
-In this case, we provided a `Unit Test` to test functionality.
+We provided a `Unit Test` to test functionality in this case.
 
 ````YAML
 ---
