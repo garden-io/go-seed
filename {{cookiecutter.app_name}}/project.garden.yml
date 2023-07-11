@@ -7,6 +7,8 @@ dotIgnoreFile: .gitignore
 variables:
   # Replace underscores as Kubernetes namespaces do not allow them.
   user-namespace: go-seed-${kebabCase(local.username)} # make sure to explain all of this.
+  registryHostname: docker.io # Replace with your own registry in case it's needed.
+  registryNamespace: shankyweb # Replace this with your Dockerhub/Registry username.
 
 environments:
 
@@ -39,7 +41,7 @@ providers:
       - name: regcred
         namespace: default
     deploymentRegistry:
-      hostname: docker.io
-      namespace: shankyweb
+      hostname: ${variables.registryHostname}
+      namespace: ${variables.registryNamespace}
     namespace: ${environment.namespace}
     defaultHostname: ${var.base-hostname}

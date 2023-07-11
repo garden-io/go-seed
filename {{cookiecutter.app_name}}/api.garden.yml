@@ -26,7 +26,8 @@ spec:
     path: ./my-chart # Garden only support charts to be a sub-path, if you desire you can host this in Github and use repositoryUrl instead.
   values: # Override default values with Go container config, see all config available at https://github.com/companyinfo/helm-charts/tree/main
     image:
-      repository: ${actions.build.api-build.outputs.deployment-image-name}
+      registry: ${providers.kubernetes.config.deploymentRegistry.hostname}
+      repository: ${providers.kubernetes.config.deploymentRegistry.namespace}/${actions.build.api-build.outputs.localImageName}
       tag: ${actions.build.api-build.version}
       pullPolicy: IfNotPresent
     ingress:

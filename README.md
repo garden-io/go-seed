@@ -184,6 +184,8 @@ dotIgnoreFile: .gitignore
 variables:
   # Replace underscores as Kubernetes namespaces do not allow them.
   user-namespace: go-seed-${kebabCase(local.username)} # make sure to explain all of this.
+  registryHostname: docker.io # Replace with your own registry in case it's needed.
+  registryNamespace: shankyweb # Replace this with your Dockerhub/Registry username.
 
 environments:
 
@@ -216,8 +218,8 @@ providers:
       - name: regcred
         namespace: default
     deploymentRegistry:
-      hostname: docker.io
-      namespace: shankyweb
+      hostname: ${variables.registryHostname}
+      namespace: ${variables.registryNamespace}
     namespace: ${environment.namespace}
     defaultHostname: ${var.base-hostname}
 ````
@@ -265,7 +267,8 @@ spec:
     path: ./my-chart # Garden only support charts to be a sub-path, if you desire you can host this in Github and use repositoryUrl instead.
   values: # Override default values with Go container config, see all config available at https://github.com/companyinfo/helm-charts/tree/main
     image:
-      repository: ${actions.build.api-build.outputs.deployment-image-name}
+      registry: ${providers.kubernetes.config.deploymentRegistry.hostname}
+      repository: ${providers.kubernetes.config.deploymentRegistry.namespace}/${actions.build.api-build.outputs.localImageName}
       tag: ${actions.build.api-build.version}
       pullPolicy: IfNotPresent
     ingress:
